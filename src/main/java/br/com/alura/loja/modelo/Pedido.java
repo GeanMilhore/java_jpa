@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,23 +28,9 @@ public class Pedido {
 	private BigDecimal valorTotal = BigDecimal.ZERO;
 	private LocalDate data = LocalDate.now();
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 	
-	/**
-	 * não faz sentido um item pedido
-	 * sem um pedido, então podemos
-	 * pedir para jpa salvar juntamente
-	 * as duas entidades (pedido e item pedido)
-	 * 
-	 * cascade : tudo oque ocorrer com o pedido
-	 * acontece com o item pedido.
-	 * 
-	 * ele permite o controle dos acontecimentos
-	 * de acordo com o evento.
-	 * 
-	 * persist, remove, refresh, merge e etc...
-	 */
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
 
@@ -82,4 +69,12 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}	
+	
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
+	}
 }

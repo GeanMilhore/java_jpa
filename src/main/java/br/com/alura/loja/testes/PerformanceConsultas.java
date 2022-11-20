@@ -24,9 +24,12 @@ public class PerformanceConsultas {
 		cadastrarAndTestarPedidos();
 		System.out.println("=========================================IMPORTANTE==================================");
 		EntityManager em = JPAUtil.getEntityManager();
+		PedidoDao pedidoDao = new PedidoDao(em);
 		
-		Pedido pedido = em.find(Pedido.class, 1l);
-		System.out.println(pedido.getCliente());
+		Pedido pedido = pedidoDao.buscarPedidoComCliente(1l);
+		em.close();
+		 
+		System.out.println(pedido.getCliente().getNome());
 	}
 
 	private static void cadastrarAndTestarPedidos() {

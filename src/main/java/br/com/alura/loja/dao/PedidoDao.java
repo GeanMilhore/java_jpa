@@ -1,14 +1,11 @@
 package br.com.alura.loja.dao;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import br.com.alura.loja.modelo.Pedido;
-import br.com.alura.loja.modelo.Produto;
 import br.com.alura.loja.vo.RelatorioDeVendasVo;
 
 public class PedidoDao {
@@ -51,30 +48,6 @@ public class PedidoDao {
 				Pedido.class)
 				.setParameter("id", id)
 				.getSingleResult();
-	}
-	
-	public List<Produto> buscarPorParametros(String nome, BigDecimal preco, LocalDate dataCadastro){
-		String jpql = "SELECT p FROM Produto p WHERE 1=1 ";
-		
-		if(nome != null && !jpql.isEmpty()) {
-			jpql.concat("AND p.nome = :nome ");
-		}
-		
-		if(preco != null) {
-			jpql.concat("AND p.preco = :preco ");
-		}
-		
-		if(dataCadastro != null ) {
-			jpql.concat("AND p.dataCadastro = :dataCadastro ");
-		}
-		
-		TypedQuery<Produto> query = em.createQuery(jpql, Produto.class);
-		
-		if(nome != null && !jpql.isEmpty()) query.setParameter("nome", nome);
-		if(preco != null) query.setParameter("preco", preco);
-		if(dataCadastro != null ) query.setParameter("dataCadastro", dataCadastro);
-		
-		return query.getResultList();
 	}
 }
 

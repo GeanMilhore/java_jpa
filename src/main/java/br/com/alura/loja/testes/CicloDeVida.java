@@ -15,13 +15,13 @@ public class CicloDeVida {
 		em.getTransaction().begin();
 		
 		em.persist(celulares);
-		celulares.setNome("XPTO");
+		celulares.getId().setNome("XPTO");
 		
 		em.flush();
 		em.clear();
 		
 		celulares = em.merge(celulares);
-		celulares.setNome("Cellphone");
+		celulares.getId().setNome("Cellphone");
 		em.flush();
 		em.clear();
 		em.remove(celulares);
